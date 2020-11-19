@@ -9,8 +9,7 @@ Sprawdzenie którzy wikingowie są najstarsi
 
     
     SELECT * FROM postac WHERE rodzaj = 'wiking' AND nazwa!='Bjorn' ORDER BY data_urodzenia ASC; //rosnąco ASC //malejąco DESC
-    line 2 of code
-    line 3 of code
+
     
 Uśmiercenie wikingów    
 
