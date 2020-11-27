@@ -32,7 +32,7 @@ a)
  b)
 
 
-   select nazwa, avg(waga) from zasob group by nazwa having sum(waga) > 10 and sum(ilosc) >=4;
+    select nazwa, avg(waga) from zasob group by nazwa having sum(waga) > 10 and sum(ilosc) >=4;
 
 
  c)
