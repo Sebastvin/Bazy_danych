@@ -4,18 +4,18 @@
  ### Zad.1
 
 
-  DELIMITER //
-  CREATE TRIGGER kreatura_before_insert
-  BEFORE INSERT ON kreatura
-  FOR EACH ROW
-  BEGIN
-  IF NEW.waga > 0
-  THEN
-  SET NEW.waga = 0;
-  END IF;
-  END
-  //
-  DELIMITER;
+   DELIMITER //
+   CREATE TRIGGER kreatura_before_insert
+   BEFORE INSERT ON kreatura
+   FOR EACH ROW
+   BEGIN
+   IF NEW.waga > 0
+   THEN
+   SET NEW.waga = 0;
+   END IF;
+   END
+   //
+   DELIMITER;
 
 
 
@@ -23,33 +23,34 @@
   ### Zad.2
 
 
-  DELIMITER //
-  CREATE TRIGGER wyprawa_before_delete
-  BEFORE DELETE ON wyprawa
-  FOR EACH ROW
-  BEGIN
-    INSERT INTO archiwum_wypraw
-      SELECT w.id_wyprawy, w.nazwa, w.data_rozpoczecia, w.data_zakonczenia, k.nazwa
-      FROM WYPRAWA AS w JOIN kreatura AS k
-      ON w.kierownik=k.idKreatury
-    WHERE
-      w.id_wyprawy=old.id_wyprawy;
-  END
-  //
-  DELIMITER ;
+   DELIMITER //
+   CREATE TRIGGER wyprawa_before_delete
+   BEFORE DELETE ON wyprawa
+   FOR EACH ROW
+   BEGIN
+     INSERT INTO archiwum_wypraw
+       SELECT w.id_wyprawy, w.nazwa, w.data_rozpoczecia, w.data_zakonczenia, k.nazwa
+       FROM WYPRAWA AS w JOIN kreatura AS k
+       ON w.kierownik=k.idKreatury
+     WHERE
+       w.id_wyprawy=old.id_wyprawy;
+   END
+   //
+   DELIMITER ;
  
 
   ***
   ### Zad.3
 
   a)
-    DELIMITER //
-    CREATE PROCEDURE eliksir_sily(IN id int)
-    BEGIN 
-    UPDATE kreatura SET udzwig = 1.2 * udzwig WHERE idKreatury = id;
-    END
-    //
-    DELIMITER;
+  
+     DELIMITER //
+     CREATE PROCEDURE eliksir_sily(IN id int)
+     BEGIN 
+     UPDATE kreatura SET udzwig = 1.2 * udzwig WHERE idKreatury = id;
+     END
+     //
+     DELIMITER;
  
     
  b)
@@ -80,23 +81,25 @@
 
 
 
-  DELIMITER //
-  CREATE TRIGGER sprawdz_tesciowa
-  AFTER INSERT ON wyprawa
-  FOR EACH ROW
-  BEGIN
-  DECLARE zmienna INT;
-  SELECT count(*) INTO zmienna
-  FROM etapy_wyprawy AS e, kreatura AS k, wyprawa AS w, uczestnicy AS u
-  WHERE e.idWyprawy=w.id_wyprawy AND k.idKreatury=u.id_uczestnika
-  AND u.id_wyprawy=w.id_wyprawy
-  AND k.nazwa='Tesciowa' AND e.sektor=7
-  AND w.id_wyprawy=NEW.id_wyprawy;
-  IF zmienna > 0
-  THEN
-  INSERT INTO system_alarmowy VALUES(DEFAULT, 'Tesciowa nadchodzi !!!');
-  END IF;
-  END//
+     DELIMITER //
+    CREATE TRIGGER sprawdz_tesciowa
+    AFTER INSERT ON wyprawa
+    FOR EACH ROW
+    BEGIN
+    DECLARE zmienna INT;
+    SELECT count(*) INTO zmienna
+    FROM etapy_wyprawy AS e, kreatura AS k, wyprawa AS w, uczestnicy AS u
+    WHERE e.idWyprawy=w.id_wyprawy AND k.idKreatury=u.id_uczestnika
+    AND u.id_wyprawy=w.id_wyprawy
+    AND k.nazwa='Tesciowa' AND e.sektor=7
+    AND w.id_wyprawy=NEW.id_wyprawy;
+    IF zmienna > 0
+    THEN
+    INSERT INTO system_alarmowy VALUES(DEFAULT, 'Tesciowa nadchodzi !!!');
+    END IF;
+    END
+    //
+    DELIMITER 
 
 
 
