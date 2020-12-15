@@ -63,7 +63,7 @@
         SELECT UPPER(tekst) INTO duze;
         RETURN duze;
     END //
-
+    DELIMITER;
 
 
   ***
@@ -74,7 +74,7 @@
     CREATE TABLE system_alarmowy (
     id_alarmu INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     wiadomosc VARCHAR(50) ,
-    )
+    );
 
 
  b)
@@ -108,7 +108,7 @@
 
   a)
 
-    DELIMITER $$
+    DELIMITER //
     CREATE PROCEDURE srednia_itp(
     OUT srednia FLOAT,
     OUT suma FLOAT,
@@ -117,7 +117,7 @@
     SELECT avg(udzwig), sum(udzwig), max(udzwig)
     INTO srednia, suma, maks FROM kreatura;
     END
-    $$
+    //
     
    
    b) 
