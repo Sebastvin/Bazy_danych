@@ -4,18 +4,18 @@
  ### Zad.1
 
 
-   DELIMITER //
-   CREATE TRIGGER kreatura_before_insert
-   BEFORE INSERT ON kreatura
-   FOR EACH ROW
-   BEGIN
-   IF NEW.waga > 0
-   THEN
-   SET NEW.waga = 0;
-   END IF;
-   END
-   //
-   DELIMITER;
+    DELIMITER //
+    CREATE TRIGGER kreatura_before_insert
+    BEFORE INSERT ON kreatura
+    FOR EACH ROW
+    BEGIN
+    IF NEW.waga > 0
+    THEN
+    SET NEW.waga = 0;
+    END IF;
+    END
+    //
+    DELIMITER;
 
 
 
@@ -23,20 +23,20 @@
   ### Zad.2
 
 
-   DELIMITER //
-   CREATE TRIGGER wyprawa_before_delete
-   BEFORE DELETE ON wyprawa
-   FOR EACH ROW
-   BEGIN
-     INSERT INTO archiwum_wypraw
-       SELECT w.id_wyprawy, w.nazwa, w.data_rozpoczecia, w.data_zakonczenia, k.nazwa
-       FROM WYPRAWA AS w JOIN kreatura AS k
-       ON w.kierownik=k.idKreatury
-     WHERE
-       w.id_wyprawy=old.id_wyprawy;
-   END
-   //
-   DELIMITER ;
+    DELIMITER //
+    CREATE TRIGGER wyprawa_before_delete
+    BEFORE DELETE ON wyprawa
+    FOR EACH ROW
+    BEGIN
+      INSERT INTO archiwum_wypraw
+        SELECT w.id_wyprawy, w.nazwa, w.data_rozpoczecia, w.data_zakonczenia, k.nazwa
+        FROM WYPRAWA AS w JOIN kreatura AS k
+        ON w.kierownik=k.idKreatury
+      WHERE
+        w.id_wyprawy=old.id_wyprawy;
+    END
+    //
+    DELIMITER;
  
 
   ***
@@ -99,7 +99,7 @@
     END IF;
     END
     //
-    DELIMITER 
+    DELIMITER; 
 
 
 
